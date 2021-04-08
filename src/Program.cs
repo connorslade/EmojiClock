@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Drawing;
-using System.Net;
 using System.Windows.Forms;
 using EmojiClock.Properties;
 
 namespace EmojiClock
 {
-    static class Program
+    internal static class Program
     {
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -17,12 +16,13 @@ namespace EmojiClock
         }
     }
 
-
     public class App : ApplicationContext
     {
         private static System.Timers.Timer _timer;
         public static readonly NotifyIcon Tray = new NotifyIcon();
-        public static readonly Icon[] TrayIcons = {
+
+        public static readonly Icon[] TrayIcons =
+        {
             Resources.one_oclock_1f550_png,
             Resources.two_oclock_1f551_png,
             Resources.three_oclock_1f552_png,
@@ -35,7 +35,6 @@ namespace EmojiClock
             Resources.ten_oclock_1f559_png,
             Resources.eleven_oclock_1f55a_png,
             Resources.twelve_oclock_1f55b_png
-
         };
 
         public App()
@@ -43,25 +42,24 @@ namespace EmojiClock
             Tray.Icon = Resources.one_oclock_1f550_png;
             Tray.ContextMenu = new ContextMenu(new[]
             {
-                new MenuItem("Github", gitHub),
+                new MenuItem("Github", GitHub),
                 new MenuItem("Exit", Exit)
             });
             Tray.Visible = true;
             SetTimer();
-            new Time().setTimeEmoji();
+            Time.SetTimeEmoji();
         }
 
-        void Exit(object sender, EventArgs e)
+        private static void Exit(object sender, EventArgs e)
         {
             Tray.Visible = false;
             Application.Exit();
         }
 
-        void gitHub(object sender, EventArgs e)
+        private static void GitHub(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/Basicprogrammer10/");
         }
-
 
         private static void SetTimer()
         {
@@ -71,21 +69,18 @@ namespace EmojiClock
             _timer.Enabled = true;
         }
 
-
-
         private static void OnTimedEvent()
         {
-            new Time().setTimeEmoji();
+            Time.SetTimeEmoji();
         }
     }
 
-    public class Time
+    public static class Time
     {
-
-        public void setTimeEmoji()
+        public static void SetTimeEmoji()
         {
-            String Hour = DateTime.Now.ToString("HH");
-            App.Tray.Icon = App.TrayIcons[int.Parse(Hour) - 1];
+            var hour = DateTime.Now.ToString("HH");
+            App.Tray.Icon = App.TrayIcons[int.Parse(hour) - 1];
         }
     }
 }
