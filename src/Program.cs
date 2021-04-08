@@ -79,8 +79,9 @@ namespace EmojiClock
     {
         public static void SetTimeEmoji()
         {
-            var hour = DateTime.Now.ToString("HH");
-            App.Tray.Icon = App.TrayIcons[int.Parse(hour) - 1];
+            var hour = int.Parse(DateTime.Now.ToString("HH"));
+            if (hour > 12) hour -= 12;
+            App.Tray.Icon = App.TrayIcons[hour - 1];
         }
     }
 }
