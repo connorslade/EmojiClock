@@ -58,20 +58,15 @@ namespace EmojiClock
 
         private static void GitHub(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/Basicprogrammer10/");
+            System.Diagnostics.Process.Start("https://github.com/Basicprogrammer10/EmojiClock");
         }
 
         private static void SetTimer()
         {
             _timer = new System.Timers.Timer(5000);
-            _timer.Elapsed += (sender, e) => { OnTimedEvent(); };
+            _timer.Elapsed += (sender, e) => { Time.SetTimeEmoji(); };
             _timer.AutoReset = true;
             _timer.Enabled = true;
-        }
-
-        private static void OnTimedEvent()
-        {
-            Time.SetTimeEmoji();
         }
     }
 
