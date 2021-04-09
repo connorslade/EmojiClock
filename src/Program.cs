@@ -39,7 +39,7 @@ namespace EmojiClock
 
         public App()
         {
-            Tray.Icon = Resources.one_oclock_1f550_png;
+            Tray.Icon = TrayIcons[0];
             Tray.ContextMenu = new ContextMenu(new[]
             {
                 new MenuItem("Github", GitHub),
@@ -76,6 +76,7 @@ namespace EmojiClock
         {
             var hour = int.Parse(DateTime.Now.ToString("HH"));
             if (hour > 12) hour -= 12;
+            if (hour == 0) hour += 12;
             App.Tray.Icon = App.TrayIcons[hour - 1];
         }
     }
