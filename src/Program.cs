@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using EmojiClock.Properties;
+using Timer = System.Timers.Timer;
 
 namespace EmojiClock
 {
@@ -10,15 +12,13 @@ namespace EmojiClock
         [STAThread]
         private static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new App());
         }
     }
 
     public class App : ApplicationContext
     {
-        private static System.Timers.Timer _timer;
+        private static Timer _timer;
         public static readonly NotifyIcon Tray = new NotifyIcon();
 
         public static readonly Icon[] TrayIcons =
@@ -58,12 +58,12 @@ namespace EmojiClock
 
         private static void GitHub(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/Basicprogrammer10/EmojiClock");
+            Process.Start("https://github.com/Basicprogrammer10/EmojiClock");
         }
 
         private static void SetTimer()
         {
-            _timer = new System.Timers.Timer(5000);
+            _timer = new Timer(5000);
             _timer.Elapsed += (sender, e) => { Time.SetTimeEmoji(); };
             _timer.AutoReset = true;
             _timer.Enabled = true;
